@@ -1,0 +1,44 @@
+/* styles.css (or your preferred stylesheet) */
+.planet-section {
+    display: flex;
+    justify-content: flex-start; /* Align content to the left */
+  }
+  
+  .planetarium {
+    flex: 1; /* Expand to fill available space */
+    position: relative; /* Allows positioning children */
+  }
+  
+
+  .planet-description {
+    display: flex;
+    flex-direction: column;
+    width: 25rem; /* Adjust width as needed */
+    padding: 20px;
+    margin-top: 25vh;
+    left: 15%;
+    position: absolute;
+    background-color: rgba(80, 73, 73, 0.8); /* Semi-transparent black background for better contrast */
+    text-align: left; /* Left-align text */
+    border-radius: 8px; /* Add rounded corners */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+    transition: background-color 0.3s, transform 0.3s; /* Add smooth transitions */
+
+  }
+  .planet-description h2 {
+    color: #fff; /* White text color */
+    font-size: 3rem; /* Adjust font size */
+    
+    margin-bottom: 10px; /* Add spacing between title and content */
+  }
+  
+  .planet-description p {
+    color: #fff; /* White text color */
+    font-size: 1.7rem; /* Adjust font size */
+    line-height: 1.4; /* Improve line spacing for readability */
+  }
+  .planet-description:hover {
+    background-color: rgba(80, 73, 73, 0.9); /* Darken the background on hover */
+    transform: scale(1.02); /* Slightly scale up the box on hover */
+    
+  }
