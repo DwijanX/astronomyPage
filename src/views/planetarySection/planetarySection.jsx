@@ -11,7 +11,7 @@ const PlanetSection = () => {
   return (
     <div className="planet-section">
       <div className="planetarium">
-        <Planet texturePath="src\\assets\\textures\\earthlights1k.jpg" />
+        <Planet texturePath='/assets/textures/earthlights1k.jpg' />
       </div>
       <PlanetDescription planetInfo={earthInfo} />
     </div>
