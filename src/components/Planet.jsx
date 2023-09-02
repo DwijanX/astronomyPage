@@ -13,7 +13,7 @@ function Planet({ texturePath, ringsTexture = null }) {
   const rotationSpeedMultiplier = 0.1;
   const maxRotationX = Math.PI / 2;
   const minRotationX = -Math.PI / 2;
-  const rotationDeceleration = 0.0005;
+  const rotationDeceleration = 0.0002;
   const radius = 1;
 
   const [currentTexturePath, setCurrentTexturePath] = useState(texturePath);
@@ -78,7 +78,8 @@ function Planet({ texturePath, ringsTexture = null }) {
     const geometry = new THREE.SphereGeometry(radius, 32, 32);
     const material = new THREE.MeshPhongMaterial();
     const sphere = new THREE.Mesh(geometry, material);
-    sphere.rotation.x = 12; // Initial rotation
+    sphere.rotation.x = 15; 
+    sphere.rotation.y = -20; 
     sphere.position.x = 1.5;
     material.map = new THREE.TextureLoader().load(currentTexturePath);
     scene.add(sphere);
