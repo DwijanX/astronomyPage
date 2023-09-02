@@ -15,6 +15,7 @@ function App() {
       path: "/planet/:planetName",
       element: <PlanetView></PlanetView>,
     },
+    
   ]);
   return (
     <RouterProvider router={router} />
