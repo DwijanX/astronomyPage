@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
+
+
 function Planet({ texturePath, ringsTexture = null }) {
   const mountRef = useRef();
   const rendererRef = useRef();
@@ -16,6 +18,36 @@ function Planet({ texturePath, ringsTexture = null }) {
 
   const [currentTexturePath, setCurrentTexturePath] = useState(texturePath);
 
+
+  const addStars = (scene, starCount=1000, starSize, starColor) => {
+    if (scene) {
+      const stars = new THREE.Group();
+      
+      // Create a random distribution of stars
+      const starGeometry = new THREE.BufferGeometry();
+      const starVertices = [];
+      for (let i = 0; i < starCount; i++) {
+        const x = (Math.random() - 0.5) * 2000;
+        const y = (Math.random() - 0.5) * 2000;
+        const z = (Math.random() - 0.5) * 2000;
+        starVertices.push(x, y, z);
+      }
+      starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+      
+      const starMaterial = new THREE.PointsMaterial({ 
+        size: starSize || 1.5,  // Adjust star size as needed
+        color: starColor || 0xffffff,  // Set star color, default to white
+        transparent: true,
+        opacity: 0.8,
+      });
+  
+      const starField = new THREE.Points(starGeometry, starMaterial);
+      stars.add(starField);
+  
+      scene.add(stars);
+    }
+  };
+  
   useEffect(() => {
     setCurrentTexturePath(texturePath);
   }, [texturePath]);
@@ -71,7 +103,7 @@ function Planet({ texturePath, ringsTexture = null }) {
     scene.add(light);
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.15); // Adjust the intensity as needed
     scene.add(ambientLight);
-
+    addStars(scene)
     const animate = () => {
       requestAnimationFrame(animate);
       const sphere = sphereRef.current;
