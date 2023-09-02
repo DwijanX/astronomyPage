@@ -16,7 +16,7 @@ function App() {
       element: <PlanetView></PlanetView>,
     },
     {
-      path: '*',
+      path: '/',
       element: <Navigate to="/planet/earth" replace />,
     },
     
