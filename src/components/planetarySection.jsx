@@ -1,7 +1,6 @@
 import React from 'react';
-import Planet from '../../components/Planet';
-import PlanetDescription from '../../components/PlanetDescription';
-import "./planetarySectionStyles.css"
+import Planet from './Planet';
+import PlanetDescription from './PlanetDescription';
 const PlanetSection = () => {
   const earthInfo = {
     name: 'Earth',

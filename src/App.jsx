@@ -1,18 +1,24 @@
-import { useState } from 'react'
-import './App.css'
-import PlanetSection from './views/planetarySection/planetarySection'
+// App.js (or Main.js)
+import React from 'react';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Navbar from './components/Navbar';
+import PlanetView from './views/planetarySection/planetsView';
+import "./styles.css"
+// Import other view components if you have more views
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <PlanetView></PlanetView>,
+    },
+  ]);
   return (
-    <>
-      <header className="App-header">
-        <h1>3D Sphere Example</h1>
-        <PlanetSection></PlanetSection>
-      </header>
-    </>
-  )
+    <RouterProvider router={router} />
+  );
 }
 
-export default App
+export default App;
