@@ -55,9 +55,12 @@ function Planet({ texturePath, ringsTexture = null }) {
     if (ringsTexture) {
       // Create Saturn's rings
       const ringGeometry = new THREE.RingGeometry(1.7, 2.1, 64);
+      
       const ringMaterial = new THREE.MeshPhongMaterial({side: THREE.DoubleSide});
+      
       ringMaterial.map = new THREE.TextureLoader().load(ringsTexture);
-
+      ringMaterial.map.wrapS = THREE.RepeatWrapping;
+      ringMaterial.map.repeat.x = 125;
       const ring = new THREE.Mesh(ringGeometry, ringMaterial);
       ring.position.x = 1.5;
       ring.rotation.x = Math.PI / 5;
