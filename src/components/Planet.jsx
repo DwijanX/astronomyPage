@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef,useState } from 'react';
 import * as THREE from 'three';
 
 function Planet({texturePath}) {
@@ -13,6 +13,10 @@ function Planet({texturePath}) {
   const rotationDeceleration = 0.0005;
   const radius = 1;
 
+  const [currentTexturePath, setCurrentTexturePath] = useState(texturePath);
+  useEffect(() => {
+    setCurrentTexturePath(texturePath);
+  }, [texturePath]);
   useEffect(() => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -36,7 +40,7 @@ function Planet({texturePath}) {
     const sphere = new THREE.Mesh(geometry, material);
     sphere.rotation.x = 12; // Initial rotation
     sphere.position.x = 1.5;
-    material.map = new THREE.TextureLoader().load(texturePath);
+    material.map = new THREE.TextureLoader().load(currentTexturePath);
     scene.add(sphere);
     sphereRef.current = sphere;
 
@@ -68,7 +72,7 @@ function Planet({texturePath}) {
     };
 
     animate();
-  }, []);
+  }, [currentTexturePath]);
 
   const prevMouseX = useRef(0);
   const prevMouseY = useRef(0);
