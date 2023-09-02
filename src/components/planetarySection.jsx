@@ -1,18 +1,15 @@
 import React from 'react';
 import Planet from './Planet';
 import PlanetDescription from './PlanetDescription';
-const PlanetSection = () => {
-  const earthInfo = {
-    name: 'Earth',
-    description: 'Earth is the third planet from the Sun and the only astronomical object known to harbor life. It is the densest planet in the Solar System and is sometimes referred to as the World or the Blue Planet due to its abundant water.'
-  };
-
+import planets from '../Info/planetsInfo';
+const PlanetSection = ({planet}) => {
+  const currentPlanet = planets[planet]
   return (
     <div className="planet-section">
       <div className="planetarium">
-        <Planet texturePath='/assets/textures/earthlights1k.jpg' />
+        <Planet texturePath={currentPlanet.texture} />
       </div>
-      <PlanetDescription planetInfo={earthInfo} />
+      <PlanetDescription planetInfo={currentPlanet} />
     </div>
   );
 };

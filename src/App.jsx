@@ -12,7 +12,7 @@ import "./styles.css"
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/planet/:planetName",
       element: <PlanetView></PlanetView>,
     },
   ]);
