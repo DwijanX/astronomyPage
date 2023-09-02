@@ -1,10 +1,11 @@
-import React, { useEffect, useRef,useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
-function Planet({texturePath}) {
+function Planet({ texturePath, ringsTexture = null }) {
   const mountRef = useRef();
   const rendererRef = useRef();
   const sphereRef = useRef();
+  const ringRef = useRef();
   const isMouseDown = useRef(false);
   const rotationSpeed = 0.005;
   const rotationSpeedMultiplier = 0.1;
@@ -14,12 +15,19 @@ function Planet({texturePath}) {
   const radius = 1;
 
   const [currentTexturePath, setCurrentTexturePath] = useState(texturePath);
+
   useEffect(() => {
     setCurrentTexturePath(texturePath);
   }, [texturePath]);
+
   useEffect(() => {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+      55,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
     camera.position.z = 5;
 
     const renderer = rendererRef.current || new THREE.WebGLRenderer();
@@ -44,15 +52,29 @@ function Planet({texturePath}) {
     scene.add(sphere);
     sphereRef.current = sphere;
 
+    if (ringsTexture) {
+      // Create Saturn's rings
+      const ringGeometry = new THREE.RingGeometry(1.7, 2.1, 64);
+      const ringMaterial = new THREE.MeshPhongMaterial({side: THREE.DoubleSide});
+      ringMaterial.map = new THREE.TextureLoader().load(ringsTexture);
+
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+      ring.position.x = 1.5;
+      ring.rotation.x = Math.PI / 5;
+      scene.add(ring);
+      ringRef.current = ring;
+    }
+
     const light = new THREE.DirectionalLight(0xffffff, 1);
     light.position.set(1, 1, 1).normalize();
     scene.add(light);
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.15); // Adjust the intensity as needed
     scene.add(ambientLight);
-    
+
     const animate = () => {
       requestAnimationFrame(animate);
       const sphere = sphereRef.current;
+      const ring = ringRef.current;
 
       if (isMouseDown.current) {
         const rotationDeltaX = (prevMouseX.current - mouseX.current) * rotationSpeedMultiplier;
@@ -60,10 +82,16 @@ function Planet({texturePath}) {
         sphere.rotation.y += rotationDeltaX;
         sphere.rotation.x += rotationDeltaY;
 
+        ring.rotation.y += rotationDeltaX;
+        ring.rotation.x += rotationDeltaY;
+
         sphere.rotation.x = Math.max(minRotationX, Math.min(maxRotationX, sphere.rotation.x));
       } else {
         sphere.rotation.y -= rotationDeceleration * (sphere.rotation.y - rotationSpeed);
         sphere.rotation.x -= rotationDeceleration * (sphere.rotation.x - rotationSpeed);
+
+        ring.rotation.y -= rotationDeceleration * (ring.rotation.y - rotationSpeed);
+        ring.rotation.x -= rotationDeceleration * (ring.rotation.x - rotationSpeed);
 
         sphere.rotation.x = Math.max(minRotationX, Math.min(maxRotationX, sphere.rotation.x));
       }

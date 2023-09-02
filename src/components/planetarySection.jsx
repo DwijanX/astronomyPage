@@ -7,7 +7,7 @@ const PlanetSection = ({planet}) => {
   return (
     <div className="planet-section">
       <div className="planetarium">
-        <Planet texturePath={currentPlanet.texture} />
+        <Planet texturePath={currentPlanet.texture} ringsTexture={currentPlanet.ringsTexture??currentPlanet.ringsTexture} />
       </div>
       <PlanetDescription planetInfo={currentPlanet} />
     </div>

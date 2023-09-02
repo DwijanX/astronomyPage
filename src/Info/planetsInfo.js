@@ -22,18 +22,22 @@ const planets = {
     description:
       'Saturn is known for its stunning ring system, which consists of nine continuous main rings and three discontinuous arcs. It is the sixth planet from the Sun.',
     texture: '/textures/saturnmap.jpg',
+    ringsTexture:"/textures/saturnringcolor.jpg"
   },
   uranus: {
     name: 'Uranus',
     description:
       'Uranus is the seventh planet from the Sun and is unique among the planets because it rotates on its side. It is often referred to as an "ice giant" due to its composition.',
     texture: '/textures/uranusmap.jpg',
+    ringsTexture:"/textures/uranusringcolour.jpg"
+
   },
   neptune: {
     name: 'Neptune',
     description:
       'Neptune is the eighth and farthest known planet from the Sun in the Solar System. It is a gas giant and is often referred to as the "Blue Giant" because of its blue appearance.',
     texture: '/textures/neptunemap.jpg',
+    
   },
 };
 
