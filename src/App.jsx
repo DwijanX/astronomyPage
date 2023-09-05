@@ -12,7 +12,7 @@ import "./styles.css"
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/planet/:planetName",
+      path: "/celestialBody/:name",
       element: <PlanetView></PlanetView>,
     },
     {

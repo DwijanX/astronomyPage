@@ -3,12 +3,12 @@ import PlanetSection from '../../components/planetarySection';
 import Navbar from '../../components/Navbar';
 import { useParams } from 'react-router-dom';
 const PlanetView = () => {
-  const { planetName } = useParams();
+  const { name } = useParams();
 
   return (
     <div >
         <Navbar></Navbar>
-      <PlanetSection planet={planetName}></PlanetSection>
+      <PlanetSection planet={name}></PlanetSection>
     </div>
   );
 };

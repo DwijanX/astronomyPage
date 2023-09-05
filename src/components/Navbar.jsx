@@ -4,15 +4,41 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <nav className="navbar"> {/* Apply the 'navbar' class */}
-      <ul>
-        <li><Link to="/planet/earth">Earth</Link></li>
-        <li><Link to="/planet/mars">Mars</Link></li>
-        <li><Link to="/planet/jupiter">Jupiter</Link></li>
-        <li><Link to="/planet/saturn">Saturn</Link></li>
-        <li><Link to="/planet/uranus">Uranus</Link></li>
-        <li><Link to="/planet/neptune">Neptune</Link></li>
-        {/* Add more links for other planets */}
+    <nav className="navbar">
+      <ul className="navbar-list">
+        <li className="navbar-item">
+          <button className="navbar-button">Planets</button>
+          <ul className="navbar-submenu">
+            <li className="navbar-submenu-item">
+              <Link to="/celestialBody/earth">Earth</Link>
+            </li>
+            <li className="navbar-submenu-item">
+              <Link to="/celestialBody/mars">Mars</Link>
+            </li>
+            <li className="navbar-submenu-item">
+              <Link to="/celestialBody/jupiter">Jupiter</Link>
+            </li>
+            <li className="navbar-submenu-item">
+              <Link to="/celestialBody/saturn">Saturn</Link>
+            </li>
+            <li className="navbar-submenu-item">
+              <Link to="/celestialBody/uranus">Uranus</Link>
+            </li>
+            <li className="navbar-submenu-item">
+              <Link to="/celestialBody/neptune">Neptune</Link>
+            </li>
+            {/* Add more links for other planets */}
+          </ul>
+        </li>
+        <li className="navbar-item">
+          <button className="navbar-button">Ships</button>
+          <ul className="navbar-submenu">
+            <li className="navbar-submenu-item">
+              <Link to="/celestialBody/voyager1">Voyager 1</Link>
+            </li>
+            {/* Add more spacecraft options here */}
+          </ul>
+        </li>
       </ul>
     </nav>
   );
