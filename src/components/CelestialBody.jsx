@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
 
 
 
 function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
   const mountRef = useRef();
   const rendererRef = useRef();
-  const sphereRef = useRef();
+  const mainBodyRef = useRef();
   const ringRef = useRef();
   const isMouseDown = useRef(false);
   const rotationSpeed = 0.005;
@@ -14,6 +15,7 @@ function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
   const maxRotationX = Math.PI / 2;
   const minRotationX = -Math.PI / 2;
   const rotationDeceleration = 0.0002;
+  const loader=new GLTFLoader()
   const radius = 1;
 
   const [currentTexturePath, setCurrentTexturePath] = useState(texturePath);
@@ -69,7 +71,23 @@ function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
     sphere.position.x = 1.5;
     material.map = new THREE.TextureLoader().load(currentTexturePath);
     scene.add(sphere);
-    sphereRef.current = sphere;
+    mainBodyRef.current = sphere;
+  }
+  const addCelestialGLTF=(scene)=>{
+    loader.load(texturePath, (gltf) => {
+        const gltfModel = gltf.scene;
+    
+        if(gltfModel)
+        {
+            gltfModel.rotation.x = 15;
+            gltfModel.rotation.y = -20;
+        }
+        gltfModel.position.x = 1.5;
+    
+        scene.add(gltfModel);
+        mainBodyRef.current = gltfModel;
+
+      });
   }
   const addLight=(scene)=>{
     const light = new THREE.DirectionalLight(0xffffff, 1);
@@ -85,7 +103,7 @@ function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
   useEffect(() => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
-      55,
+        type === 'planet' ? 50 : 100,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
@@ -106,8 +124,11 @@ function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
     mount.appendChild(renderer.domElement);
 
     if(type=="planet")
-    {
+    {   
         addPlanet(scene)
+    }
+    else{
+        addCelestialGLTF(scene)
     }
 
     if (ringsTexture) {
@@ -120,31 +141,33 @@ function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
 
     const animate = () => {
       requestAnimationFrame(animate);
-      const sphere = sphereRef.current;
+      const mainBody = mainBodyRef.current;
       const ring = ringRef.current;
 
       if (isMouseDown.current) {
         const rotationDeltaX = (prevMouseX.current - mouseX.current) * rotationSpeedMultiplier;
         const rotationDeltaY = (prevMouseY.current - mouseY.current) * rotationSpeedMultiplier;
-        sphere.rotation.y += rotationDeltaX;
-        sphere.rotation.x += rotationDeltaY;
+        mainBody.rotation.y += rotationDeltaX;
+        mainBody.rotation.x += rotationDeltaY;
         if(ring)
         {
           ring.rotation.y += rotationDeltaX;
           ring.rotation.x += rotationDeltaY;
         }
 
-        sphere.rotation.x = Math.max(minRotationX, Math.min(maxRotationX, sphere.rotation.x));
+        mainBody.rotation.x = Math.max(minRotationX, Math.min(maxRotationX, mainBody.rotation.x));
       } else {
-        sphere.rotation.y -= rotationDeceleration * (sphere.rotation.y - rotationSpeed);
-        sphere.rotation.x -= rotationDeceleration * (sphere.rotation.x - rotationSpeed);
         if(ring)
         {
-          ring.rotation.y -= rotationDeceleration * (ring.rotation.y - rotationSpeed);
-          ring.rotation.x -= rotationDeceleration * (ring.rotation.x - rotationSpeed);
+            ring.rotation.y -= rotationDeceleration * (ring.rotation.y - rotationSpeed);
+            ring.rotation.x -= rotationDeceleration * (ring.rotation.x - rotationSpeed);
+        }
+        if (mainBody) {
+            mainBody.rotation.y -= rotationDeceleration * (mainBody.rotation.y - rotationSpeed);
+            mainBody.rotation.x -= rotationDeceleration * (mainBody.rotation.x - rotationSpeed);
+            mainBody.rotation.x = Math.max(minRotationX, Math.min(maxRotationX, mainBody.rotation.x));
         }
 
-        sphere.rotation.x = Math.max(minRotationX, Math.min(maxRotationX, sphere.rotation.x));
       }
 
       renderer.render(scene, camera);
