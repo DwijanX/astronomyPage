@@ -3,7 +3,7 @@ import * as THREE from 'three';
 
 
 
-function Planet({ texturePath, ringsTexture = null }) {
+function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
   const mountRef = useRef();
   const rendererRef = useRef();
   const sphereRef = useRef();
@@ -47,7 +47,37 @@ function Planet({ texturePath, ringsTexture = null }) {
       scene.add(stars);
     }
   };
-  
+  const addRing=(scene)=>{
+    const ringGeometry = new THREE.RingGeometry(1.7, 2.1, 64);
+      const ringMaterial = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide });
+      ringMaterial.map = new THREE.TextureLoader().load(ringsTexture);
+      ringMaterial.map.wrapS = THREE.RepeatWrapping;
+      ringMaterial.map.repeat.x = 150;
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+      ring.position.x = 1.5;
+      ring.rotation.x = Math.PI / 5;
+      scene.add(ring);
+      ringRef.current = ring;
+      
+  }
+  const addPlanet=(scene)=>{
+    const geometry = new THREE.SphereGeometry(radius, 32, 32);
+    const material = new THREE.MeshPhongMaterial();
+    const sphere = new THREE.Mesh(geometry, material);
+    sphere.rotation.x = 15; 
+    sphere.rotation.y = -20; 
+    sphere.position.x = 1.5;
+    material.map = new THREE.TextureLoader().load(currentTexturePath);
+    scene.add(sphere);
+    sphereRef.current = sphere;
+  }
+  const addLight=(scene)=>{
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(1, 1, 1).normalize();
+    scene.add(light);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.15); // Adjust the intensity as needed
+    scene.add(ambientLight);
+  }
   useEffect(() => {
     setCurrentTexturePath(texturePath);
   }, [texturePath]);
@@ -75,36 +105,19 @@ function Planet({ texturePath, ringsTexture = null }) {
     }
     mount.appendChild(renderer.domElement);
 
-    const geometry = new THREE.SphereGeometry(radius, 32, 32);
-    const material = new THREE.MeshPhongMaterial();
-    const sphere = new THREE.Mesh(geometry, material);
-    sphere.rotation.x = 15; 
-    sphere.rotation.y = -20; 
-    sphere.position.x = 1.5;
-    material.map = new THREE.TextureLoader().load(currentTexturePath);
-    scene.add(sphere);
-    sphereRef.current = sphere;
-
-    if (ringsTexture) {
-      // Create Saturn's rings
-      const ringGeometry = new THREE.RingGeometry(1.7, 2.1, 64);
-      const ringMaterial = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide });
-      ringMaterial.map = new THREE.TextureLoader().load(ringsTexture);
-      ringMaterial.map.wrapS = THREE.RepeatWrapping;
-      ringMaterial.map.repeat.x = 150;
-      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-      ring.position.x = 1.5;
-      ring.rotation.x = Math.PI / 5;
-      scene.add(ring);
-      ringRef.current = ring;
+    if(type=="planet")
+    {
+        addPlanet(scene)
     }
 
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(1, 1, 1).normalize();
-    scene.add(light);
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.15); // Adjust the intensity as needed
-    scene.add(ambientLight);
+    if (ringsTexture) {
+      addRing(scene)
+    }
+
+    addLight(scene)
     addStars(scene)
+
+
     const animate = () => {
       requestAnimationFrame(animate);
       const sphere = sphereRef.current;
@@ -166,4 +179,4 @@ function Planet({ texturePath, ringsTexture = null }) {
   );
 }
 
-export default Planet;
+export default CelestiaBody;
