@@ -17,7 +17,7 @@ function App() {
     },
     {
       path: '/',
-      element: <Navigate to="/planet/earth" replace />,
+      element: <Navigate to="/celestialBody/earth" replace />,
     },
     
   ]);
