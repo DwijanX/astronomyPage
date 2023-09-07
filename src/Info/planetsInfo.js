@@ -82,7 +82,7 @@ const planets = {
     name: 'International Space Station',
     description:
       'The International Space Station (ISS) is a space station and research laboratory in low Earth orbit. It s a joint project involving multiple space agencies.',
-    texture: '/textures/ISS_stationary.glb',
+    texture: '/textures/ISS_stationary-v7.glb',
     type: 'ISS',
   },
   europaClipper: {

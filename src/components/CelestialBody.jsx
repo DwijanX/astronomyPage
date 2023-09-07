@@ -3,8 +3,8 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-
-
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+//https://www.gstatic.com/draco/versioned/decoders/1.5.6/
 function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
   const mountRef = useRef();
   const rendererRef = useRef();
@@ -16,11 +16,17 @@ function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
   const maxRotationX = Math.PI / 2;
   const minRotationX = -Math.PI / 2;
   const rotationDeceleration = 0.0002;
-  const loader=new GLTFLoader()
+  
   const radius = 1;
   const controls = useRef();
   const [currentTexturePath, setCurrentTexturePath] = useState(texturePath);
-
+  const Dloader = new DRACOLoader();
+  const loader=new GLTFLoader()
+  // Specify path to a folder containing WASM/JS decoding libraries.
+  Dloader.setDecoderPath( '/draco/' );
+  // Optional: Pre-fetch Draco WASM/JS module.
+  Dloader.preload();
+  loader.setDRACOLoader(Dloader)
 
   const addStars = (scene, starCount=1000, starSize, starColor) => {
     if (scene) {
