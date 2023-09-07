@@ -83,6 +83,7 @@ function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
         {
           gltfModel.scale.set(scaleFactor, scaleFactor, scaleFactor);
         }
+        
         if(gltfModel)
         {
             gltfModel.rotation.x = 15;

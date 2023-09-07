@@ -30,6 +30,7 @@ function Navbar() {
             {/* Add more links for other planets */}
           </ul>
         </li>
+        
         <li className="navbar-item">
           <button className="navbar-button">Ships</button>
           <ul className="navbar-submenu">
@@ -39,7 +40,9 @@ function Navbar() {
             <li className="navbar-submenu-item">
               <Link to="/celestialBody/internationalSpaceStation">ISS</Link>
             </li>
-            
+            <li className="navbar-submenu-item">
+              <Link to="/celestialBody/europaClipper">Europa Clipper</Link>
+            </li>
             {/* Add more spacecraft options here */}
           </ul>
         </li>

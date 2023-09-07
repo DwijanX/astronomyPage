@@ -85,6 +85,13 @@ const planets = {
     texture: '/textures/ISS_stationary.glb',
     type: 'ISS',
   },
+  europaClipper: {
+    name: 'Europa Clipper',
+    description:
+      'Europa Clipper is an upcoming NASA mission to explore Jupiter’s moon Europa. It is designed to conduct detailed reconnaissance of Europa’s ice shell and subsurface ocean.',
+    texture: '/textures/clipper_spacecraft.glb',
+    type: 'ship',
+  },
   
   
   
