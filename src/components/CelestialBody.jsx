@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
 
@@ -17,7 +18,7 @@ function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
   const rotationDeceleration = 0.0002;
   const loader=new GLTFLoader()
   const radius = 1;
-
+  const controls = useRef();
   const [currentTexturePath, setCurrentTexturePath] = useState(texturePath);
 
 
@@ -76,7 +77,12 @@ function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
   const addCelestialGLTF=(scene)=>{
     loader.load(texturePath, (gltf) => {
         const gltfModel = gltf.scene;
+        const scaleFactor = 0.1; // Adjust the scale factor as needed
     
+        if(type=="ISS")
+        {
+          gltfModel.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        }
         if(gltfModel)
         {
             gltfModel.rotation.x = 15;
@@ -118,6 +124,10 @@ function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
     mount.addEventListener('mousedown', handleMouseDown);
     mount.addEventListener('mouseup', handleMouseUp);
     mount.addEventListener('mousemove', handleMouseMove);
+    controls.current = new OrbitControls(camera, renderer.domElement);
+    controls.current.enableDamping = true; // Add damping for smooth zooming
+    controls.current.dampingFactor = 0.1;
+    controls.current.zoomSpeed = 0.5; // Adjust the zoom speed as needed
     while (mount.firstChild) {
       mount.removeChild(mount.firstChild);
     }
@@ -167,7 +177,7 @@ function CelestiaBody({ texturePath, ringsTexture = null,type="planet" }) {
             mainBody.rotation.x -= rotationDeceleration * (mainBody.rotation.x - rotationSpeed);
             mainBody.rotation.x = Math.max(minRotationX, Math.min(maxRotationX, mainBody.rotation.x));
         }
-
+        controls.current.update();
       }
 
       renderer.render(scene, camera);

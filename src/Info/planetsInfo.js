@@ -61,29 +61,29 @@ const planets = {
     name: 'Apollo 11',
     description:
       'Apollo 11 was the first manned mission to land on the Moon in 1969. Neil Armstrong and Buzz Aldrin became the first humans to walk on the lunar surface.',
-    model: '/models/apollo-11.glb',
+    texture: '/textures/apollo-11.glb',
     type: 'ship',
   },
   hubbleTelescope: {
     name: 'Hubble Space Telescope',
     description:
       'The Hubble Space Telescope is a powerful space observatory launched by NASA in 1990. It has provided stunning images and valuable data about our universe.',
-    model: '/models/hubble-telescope.glb',
+    texture: '/textures/hubble-telescope.glb',
     type: 'ship',
   },
   marsRover: {
     name: 'Mars Rover',
     description:
       'Mars Rovers are robotic vehicles designed to explore the surface of Mars. They have provided valuable information about the Martian landscape and potential for life.',
-    model: '/models/mars-rover.glb',
+    texture: '/textures/marsRover.glb',
     type: 'ship',
   },
   internationalSpaceStation: {
     name: 'International Space Station',
     description:
       'The International Space Station (ISS) is a space station and research laboratory in low Earth orbit. It s a joint project involving multiple space agencies.',
-    model: '/models/international-space-station.glb',
-    type: 'ship',
+    texture: '/textures/ISS_stationary.glb',
+    type: 'ISS',
   },
   
   

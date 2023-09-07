@@ -36,7 +36,19 @@ function Navbar() {
             <li className="navbar-submenu-item">
               <Link to="/celestialBody/voyager1">Voyager 1</Link>
             </li>
+            <li className="navbar-submenu-item">
+              <Link to="/celestialBody/internationalSpaceStation">ISS</Link>
+            </li>
+            
             {/* Add more spacecraft options here */}
+          </ul>
+        </li>
+        <li className="navbar-item">
+          <button className="navbar-button">Rovers</button>
+          <ul className="navbar-submenu">
+            <li className="navbar-submenu-item">
+              <Link to="/celestialBody/marsRover">mars Rover</Link>
+            </li>
           </ul>
         </li>
       </ul>
